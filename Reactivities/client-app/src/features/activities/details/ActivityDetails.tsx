@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Card, Image, Button } from "semantic-ui-react";
 import ActivityStore from "../../../app/stores/activityStore";
 import { observer } from "mobx-react-lite";
-import { RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { Link } from "react-router-dom";
 
 interface DetailParams {
   id: string;
@@ -14,7 +15,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
   history,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const { activity: activity, loadActivity, loadingInitial } = activityStore;
+  const { activity, loadActivity, loadingInitial } = activityStore;
 
   useEffect(() => {
     loadActivity(match.params.id);

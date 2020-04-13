@@ -36,10 +36,6 @@ class ActivityStore {
     }
   };
 
-  @action clearActivity = () => {
-    this.activity = null;
-  };
-
   @action loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
     if (activity) {
@@ -53,12 +49,16 @@ class ActivityStore {
           this.loadingInitial = false;
         });
       } catch (error) {
-        console.log(error);
-        runInAction("get activity erorr", () => {
+        runInAction("get activity error", () => {
           this.loadingInitial = false;
         });
+        console.log(error);
       }
     }
+  };
+
+  @action clearActivity = () => {
+    this.activity = null;
   };
 
   getActivity = (id: string) => {
