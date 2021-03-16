@@ -1,7 +1,0 @@
-bin
-obj
-.DS_Store
-*.db
-.suo
-.vscode
-appsettings.json
