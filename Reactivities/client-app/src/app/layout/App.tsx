@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "../layout/styles.css";
-import axios from "axios";
-import { Container, List } from "semantic-ui-react";
-import { Activity } from "../models/activity";
+import { Container } from "semantic-ui-react";
 import NavBar from "./NavBar";
 import ActivitiesDashboard from "../../features/activities/dashboard/ActivityDashboard";
+import LoadingComponent from "../layout/LoadingComponent";
+import { useStore } from "../stores/store";
+import { observer } from "mobx-react-lite";
 
 function App() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const { activityStore } = useStore();
 
   useEffect(() => {
-    axios
-      .get<Activity[]>("http://localhost:5000/api/activities")
-      .then((response) => {
-        setActivities(response.data);
-      });
-  }, []);
+    activityStore.loadActivities();
+  }, [activityStore]);
+
+  if (activityStore.loadingInitial)
+    return <LoadingComponent message="Loading app..." />;
 
   return (
     <React.Fragment>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-        <ActivitiesDashboard activities={activities} />
+        <ActivitiesDashboard />
       </Container>
     </React.Fragment>
   );
 }
 
-export default App;
+export default observer(App);
