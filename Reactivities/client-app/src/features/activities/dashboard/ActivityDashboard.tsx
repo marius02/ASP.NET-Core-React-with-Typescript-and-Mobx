@@ -4,6 +4,7 @@ import { useStore } from "../../../app/stores/store";
 import ActivityList from "../dashboard/ActivityList";
 import { observer } from "mobx-react-lite";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import ActivitiesFilters from "./ActivityFilters";
 
 export default observer(function ActivitiDashboard() {
   const { activityStore } = useStore();
@@ -21,7 +22,9 @@ export default observer(function ActivitiDashboard() {
       <Grid.Column width="10">
         <ActivityList />
       </Grid.Column>
-      <h2> Activity Filter</h2>
+      <Grid.Column width="6">
+        <ActivitiesFilters />
+      </Grid.Column>
     </Grid>
   );
 });
