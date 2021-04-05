@@ -32,6 +32,7 @@ export default function ActivityListItem({ activity }: Props) {
       <Segment clearing>
         <span>{activity.description}</span>
         <Button
+          on
           as={Link}
           to={`/activities/${activity.id}`}
           color="teal"
