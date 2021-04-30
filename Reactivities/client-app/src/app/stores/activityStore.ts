@@ -73,9 +73,9 @@ export default class ActivityStore {
         const user = store.userStore.user;
         if(user) {
             activity.isGoing = activity.attendees!.some(
-                a => a.username === user.username
+                a => a.username === user.userName
             );
-            activity.isHost = activity.hostUsername === user.username;
+            activity.isHost = activity.hostUsername === user.userName;
             activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
         }
         activity.date = new Date(activity.date!);
@@ -88,7 +88,7 @@ export default class ActivityStore {
         try {
             await agent.Activities.create(activity);
             const newActivity = new Activity(activity);
-            newActivity.hostUsername = user!.username;
+            newActivity.hostUsername = user!.userName;
             newActivity.attendees = [attendee];
             this.SetActivity(newActivity);
             runInAction(() => {
@@ -138,7 +138,7 @@ export default class ActivityStore {
             runInAction(() => {
                 if(this.selectedActivity?.isGoing) {
                     this.selectedActivity.attendees = this.selectedActivity.attendees?.filter(
-                        a => a.username !== user?.username)
+                        a => a.username !== user?.userName)
                     this.selectedActivity.isGoing = false;    
                 } else {
                     const attendee = new Profile(user!);
@@ -172,5 +172,9 @@ export default class ActivityStore {
                 this.loading = false;
             })
         }
+    }
+
+    clearSelectedActivity = () => {
+        this.selectedActivity = undefined;
     }
 }
